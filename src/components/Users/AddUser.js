@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import classes from './AddUser.module.css';
-import Card from '../UI/Card'
-import Button from '../UI/Button'
+import Card from '../UI/Card';
+import Button from '../UI/Button';
+
 const AddUser = () => {
-    const [values, setValues] = useState({
+    const initialState = {
         username: '',
         age: '',
-    });
+    };
+    const [values, setValues] = useState(initialState);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValues((prevValue) => {
@@ -18,6 +20,16 @@ const AddUser = () => {
     };
     const addUserHandler = (e) => {
         e.preventDefault();
+        if (values.username.trim().length === 0 || values.age.trim().length === 0) {
+
+            return
+        }
+        if (+values.age < 1) {
+            return
+        }
+
+        setValues(initialState)
+        console.log(values);
     };
 
     return (
@@ -36,7 +48,7 @@ const AddUser = () => {
                     <input
                         name="age"
                         onChange={handleChange}
-                        value={values.age}
+                        value={(values.age)}
                         id="age"
                         type="number"
                     />
