@@ -3,7 +3,7 @@ import classes from './AddUser.module.css';
 import Card from '../UI/Card';
 import Button from '../UI/Button';
 
-const AddUser = () => {
+const AddUser = (props) => {
     const initialState = {
         username: '',
         age: '',
@@ -21,14 +21,13 @@ const AddUser = () => {
     const addUserHandler = (e) => {
         e.preventDefault();
         if (values.username.trim().length === 0 || values.age.trim().length === 0) {
-
-            return
+            return;
         }
         if (+values.age < 1) {
-            return
+            return;
         }
-
-        setValues(initialState)
+        props.addNewUser(values);
+        setValues(initialState);
         console.log(values);
     };
 
@@ -48,7 +47,7 @@ const AddUser = () => {
                     <input
                         name="age"
                         onChange={handleChange}
-                        value={(values.age)}
+                        value={values.age}
                         id="age"
                         type="number"
                     />
