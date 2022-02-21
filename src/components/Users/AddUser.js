@@ -28,7 +28,7 @@ const AddUser = (props) => {
                 title: 'Missing name or age',
                 message: 'please make sure to fill out both name and age',
             });
-            return
+            return;
         }
         if (+values.age < 1) {
             setError({
@@ -47,7 +47,11 @@ const AddUser = (props) => {
     return (
         <>
             {error && (
-                <ErrorModel title={error.title} message={error.message} onConfirm={errorHandler} />
+                <ErrorModel
+                    title={error.title}
+                    message={error.message}
+                    onConfirm={errorHandler}
+                />
             )}
             <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>

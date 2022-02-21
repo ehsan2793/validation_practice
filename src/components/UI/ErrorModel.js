@@ -18,7 +18,6 @@ const ErrorModel = (props) => {
                 </footer>
             </Card>
         </>
-
     );
 };
 
