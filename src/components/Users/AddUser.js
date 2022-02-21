@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import classes from './AddUser.module.css';
 import Card from '../UI/Card';
 import Button from '../UI/Button';
-
+import ErrorModel from '../UI/ErrorModel';
 const AddUser = (props) => {
     const initialState = {
         username: '',
         age: '',
     };
+
     const [values, setValues] = useState(initialState);
+    const [error, setError] = useState();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setValues((prevValue) => {
@@ -18,21 +20,35 @@ const AddUser = (props) => {
             };
         });
     };
+
     const addUserHandler = (e) => {
         e.preventDefault();
         if (values.username.trim().length === 0 || values.age.trim().length === 0) {
-            return;
+            setError({
+                title: 'Missing name or age',
+                message: 'please make sure to fill out both name and age',
+            });
+            return
         }
         if (+values.age < 1) {
-            return;
+            setError({
+                title: 'Age Error',
+                message: 'Age must be greater than 0',
+            });
         }
         props.addNewUser(values);
         setValues(initialState);
         console.log(values);
     };
+    const errorHandler = () => {
+        setError(null);
+    };
 
     return (
-        <div>
+        <>
+            {error && (
+                <ErrorModel title={error.title} message={error.message} onConfirm={errorHandler} />
+            )}
             <Card className={classes.input}>
                 <form onSubmit={addUserHandler}>
                     <label htmlFor="username">Username</label>
@@ -54,7 +70,7 @@ const AddUser = (props) => {
                     <Button type="submit">add User</Button>
                 </form>
             </Card>
-        </div>
+        </>
     );
 };
 
